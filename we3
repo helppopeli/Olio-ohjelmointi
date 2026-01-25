@@ -1,0 +1,183 @@
+#ifndef CHEF_H
+#define CHEF_H
+#include <string>
+using namespace std;
+
+class chef
+{
+public:
+    chef();
+    chef(string);
+   ~chef();
+    string getname();
+    void setName(string);
+
+   virtual int makeSalad(int);
+   virtual int makeSoup(int);
+protected:
+    string chefName;
+};
+
+#endif // CHEF_H
+
+#ifndef ITALIANCHEF_H
+#define ITALIANCHEF_H
+#include <string>
+#include"chef.h"
+using namespace std;
+
+class italianChef : public chef
+{
+public:
+    italianChef();
+    italianChef(string);
+    ~italianChef();
+    bool askSecret(string, int, int);
+    virtual int makeSalad(int) override;
+    virtual int makeSoup(int) override;
+private:
+    int water;
+    int flour;
+    string password = "pizza";
+    int makePizza();
+};
+
+#endif // ITALIANCHEF_H
+
+#include "chef.h"
+#include <iostream>
+
+chef::chef()
+
+{
+    cout << "Olen default kontruktorissa" <<endl;
+}
+
+chef::chef(string cN)
+{
+    cout << "Olen input konstruktorissa" << endl;
+    chefName = cN;
+
+}
+chef::~chef()
+{
+    cout << "Olen default konstruktorissa" << endl;
+}
+
+int chef::makeSalad(int numberOftimes)
+{
+    cout << "Olen salaattifunktiossa!" << endl;
+    //int numberOfportions = numberOftimes/5;
+    cout << "Annoit: " << numberOftimes << " ainesta" << endl;
+    cout << "sillä saadaan << numberOftimes/5 <<" " salaattiannosta" << endl;
+    return numberOftimes;
+}
+int chef::makeSoup(int numberOftimes)
+{
+    cout << "Olen soppafunktiossa!" << endl;
+    cout << "Annoit: " << numberOftimes << " ainesta" << endl;
+    cout << "sillä saadaan << numberOftimes/5 <<" " salaattiannosta" << endl;
+
+    return numberOftimes/3;
+}
+
+string chef::getname()
+
+{
+    cout << "olen getterissä!" << endl;
+    cout << "kokin nimi on" << chefName << endl;
+    return chefName;
+
+}
+
+void chef::setName(string cN)
+{
+    cout << "olen setterissä!" << endl;
+    chefName = cN;
+}
+
+
+#include "italianchef.h"
+#include <iostream>
+italianChef::italianChef()
+
+
+{
+    cout << "Olen Italiandefaultkonstruktorissa" << endl;
+}
+
+italianChef::italianChef(string cN) :
+{
+    cout << "olen Italianitalianputkonstruktorissa" << endl;
+    chefName = cN;
+}
+italianChef::~italianChef()
+{
+    cout << "Olen Italiandefaultkonstruktorissa" << endl;
+
+}
+// Jäsenfunktio askSecret() tarkistaa onko parametrinä annettu salasana ok,
+//ja jos on, kutsuu makePizza()-jäsenfunktiota. Muut parametrit ovat ainesten eli
+//jauhojen (flour) ja veden (water) määrä. Funktio palauttaa true/false sen mukaan oliko salasana oikea.
+
+
+
+ bool italianChef::askSecret(string pw, int amountOfwater, int amountOfflour)
+{
+     int numberOfpizza;
+//    if (pw != password) return false; // muuta string, comprea käyttämään
+    water = amountOfwater;
+    flour = amountOfflour;
+    numberOfpizza= makePizza();
+    cout << "saatiin tehtyä" << numberOfpizza << " pizza" << endl;
+    return true;
+
+}
+
+int italianChef::makePizza()
+{
+    cout << "Tehdäänpä pizza!" << endl;
+    cout << "jauhoja on " << flour <<"ja vettä on " << water << endl;
+  //  cout << "sillä saadaan" numberOfPizzas/5 << endl
+
+    return 0;
+
+
+}
+
+#include <iostream>
+#include "chef.h"
+#include "Italianchef.h"
+#include <string>
+using namespace std;
+
+int main()
+{
+    string kokinNimi;
+    cout << "Hello World!" << endl;
+    chef kokki_1("Lars");
+//  chef kokki_2();
+    kokinNimi = kokki_1.getname();
+    cout << "Main: kokinNimi on " << kokinNimi << endl;
+    kokki_1.makeSalad(10);
+    kokki_1.makeSalad(4);
+    kokki_1.makeSalad(18);
+
+    kokki_1.makeSalad(0);
+    kokki_1.makeSalad(2);
+    kokki_1.makeSalad(31);
+
+ //   Italianchef it_kokki_1();
+    Italianchef it_kokki_2("pablo");
+  //  it_kokki_1.makeSalad(15);
+    it_kokki_2.makeSoup(7);
+    it_kokki_2.makeSoup(7);
+
+ //   kokki_1_1.makePizza();
+ //     it_kokki_2.makePizza();
+    it_kokki_2.askSecret("ok"), 12, 10;
+        return 0;
+}
+
+
+
