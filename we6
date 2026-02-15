@@ -1,1 +1,360 @@
+#ifndef NOTIFIKAATTORI_H
+#define NOTIFIKAATTORI_H
+#include "seuraaja.h"
+#include <string>
+using namespace std;
+class Notifikaattori
+{
+public:
+    Notifikaattori();
+    void lisaa(Seuraaja*);
+    void poista(Seuraaja*);
+    void tulosta();
+    void postita(string);
+private:
+    Seuraaja* seuraajat = nullptr;
+};
 
+#endif // NOTIFIKAATTORI_H
+
+
+#include "seuraaja.h"
+#include <iostream>
+using namespace std;
+//Seuraaja();
+//Seuraaja(string);
+//string getNimi();
+//void paivitys(string);
+Seuraaja::Seuraaja() {
+    cout << "S konst" << endl;
+}
+
+Seuraaja::Seuraaja(string aNimi) {
+    cout << "S param konst" << endl;
+    nimi = aNimi;
+}
+
+string Seuraaja::getNimi() {
+
+    cout << "getN" << endl;
+    return(nimi);
+}
+
+void Seuraaja::paivitys(string viesti) {
+    cout << "viesti: " << viesti << endl;
+}
+
+
+#ifndef SEURAAJA_H
+#define SEURAAJA_H
+#include <string>
+using namespace std;
+
+class Seuraaja
+{
+public:
+    Seuraaja* next = nullptr;
+    Seuraaja();
+    Seuraaja(string);
+    string getNimi();
+    void paivitys(string);
+
+private:
+    string nimi;
+};
+
+#endif // SEURAAJA_H
+
+
+#include "notifikaattori.h"
+#include "seuraaja.h"
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    cout << "Hello World!" << endl;
+
+
+    Notifikaattori n;
+    Seuraaja* s1 = new Seuraaja("Heimo");
+    Seuraaja* s2 = new Seuraaja("Raimo");
+    Seuraaja* s3 = new Seuraaja("Anni");
+
+    n.tulosta();
+    n.postita("Hei vaan");
+    n.poista(s2);
+
+    n.lisaa(s1);
+    n.lisaa(s2);
+    n.lisaa(s3);
+    n.postita("Hei vaan");
+
+    n.poista(s2);
+    n.tulosta();
+    n.poista(s1);
+    n.poista(s3);
+    n.tulosta();
+     return 0;
+}
+
+#include "notifikaattori.h
+#include "seuraaja.h"
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    cout << "Hello World!" << endl;
+
+
+    Notifikaattori n;
+    Seuraaja* s1 = new Seuraaja("Heimo");
+    Seuraaja* s2 = new Seuraaja("Raimo");
+    Seuraaja* s3 = new Seuraaja("Anni");
+
+    n.tulosta();
+    n.postita("Hei vaan");
+    n.poista(s2);
+
+    n.lisaa(s1);
+    n.lisaa(s2);
+    n.lisaa(s3);
+    n.postita("Hei vaan");
+
+    n.poista(s2);
+    n.tulosta();
+    n.poista(s1);
+    n.poista(s3);
+    n.tulosta();
+     return 0;
+}
+
+main.cpp
+1 kt
+#include "notifikaattori.h"
+#include <iostream>
+using namespace std;
+
+Notifikaattori::Notifikaattori() {
+    cout << "N konst" << endl;
+}
+
+void Notifikaattori::lisaa(Seuraaja* lisSeuraajatPtr) {
+    cout << "lis S" << endl;
+    if (lisSeuraajatPtr == nullptr) return;
+
+    lisSeuraajatPtr->next = seuraajat;
+    seuraajat = lisSeuraajatPtr;
+}
+
+void Notifikaattori::poista(Seuraaja* poistSeuraajaPtr) {
+    cout << "poist S" << endl;
+    if (poistSeuraajaPtr == nullptr) return;
+    if (seuraajat == nullptr) return;
+
+    // poistetaan head
+    if (seuraajat == poistSeuraajaPtr) {
+        seuraajat = seuraajat->next;
+        poistSeuraajaPtr->next = nullptr;
+        return;
+    }
+
+    Seuraaja* prev = seuraajat;
+    Seuraaja* cur  = seuraajat->next;
+
+    while (cur != nullptr) {
+        if (cur == poistSeuraajaPtr) {
+            prev->next = cur->next;
+            cur->next = nullptr;
+            return;
+        }
+        prev = cur;
+        cur = cur->next;
+    }
+}
+
+void Notifikaattori::tulosta() {
+    if (seuraajat == nullptr) {
+        cout << "Ei seuraajia" << endl;
+        return;
+    }
+
+    Seuraaja* cur = seuraajat;
+    while (cur != nullptr) {
+        cout << cur->getNimi() << endl;
+        cur = cur->next;
+    }
+}
+
+void Notifikaattori::postita(string viesti) {
+    Seuraaja* cur = seuraajat;
+    while (cur != nullptr) {
+        cur->paivitys(viesti);
+        cur = cur->next;
+    }
+}
+
+
+#include "student.h"
+
+
+
+Student::Student(string n, int a)
+{
+    name = n;
+    age = a;
+}
+
+string Student::getName() const
+{
+    return name;
+}
+
+void Student::setName(const string &newName)
+{
+    name = newName;
+}
+
+int Student::getAge() const
+{
+    return age;
+}
+
+void Student::setAge(int newAge)
+{
+    age = newAge;
+}
+
+void Student::printStudentInfo()
+{
+    cout << "Name: " << name << " Age: " << age << endl;
+}
+
+
+#ifndef STUDENT_H
+#define STUDENT_H
+#include <string>
+#include <iostream>
+
+using namespace std;
+class Student
+{
+public:
+    Student(string n, int a);
+    string getName() const;
+    void setName(const string &newName);
+    int getAge() const;
+    void setAge(int newAge);
+
+    void printStudentInfo();
+private:
+    string name;
+    int age;
+};
+
+#endif // STUDENT_H
+
+
+#include <iostream>
+#include <student.h>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+
+int main ()
+{
+    int selection =0;
+    vector<Student>studentList;
+     string sname;
+    int sAge = 0;
+    vector<Student>::iterator it = studentList.begin();
+
+    do
+    {
+        cout<<endl;
+        cout<<"Select"<<endl;
+        cout<<"Add students = 0"<<endl;
+        cout<<"Print all students = 1"<<endl;
+        cout<<"Sort and print students according to Name = 2"<<endl;
+        cout<<"Sort and print students according to Age = 3"<<endl;
+        cout<<"Find and print student = 4"<<endl;
+        cin>>selection;
+
+        switch(selection)
+        {
+        case 0:
+            // Kysy käyttäjältä uuden opiskelijan nimi ja ikä
+            // Lisää uusi student StudentList vektoriin.
+
+            cout << "Valinta 0" << endl;
+            cout << "Mikä on sinun nimesi?" << endl;
+            cin >> sname;
+            cout << "Mikä on sinun ikäsi?" << endl;
+            cin >> sAge;
+
+
+            studentList.emplace_back(sname, sAge);
+            cout << "Lisattiin: " << sname << " " << sAge << endl;
+            break;
+        case 1:
+            // Tulosta StudentList vektorin kaikkien opiskelijoiden
+            cout << "Valinta 1" << endl;
+            cout << "Tulostetaan lista" << endl;
+            for (auto &s: studentList) {
+                //cout << s.getName() << ": " << s.getAge() << endl;
+                s.printStudentInfo();
+            }
+            break;
+
+        case 2:
+            // Järjestä StudentList vektorin Student oliot nimen mukaan
+            // algoritmikirjaston sort funktion avulla
+            // ja tulosta printStudentInfo() funktion avulla järjestetyt
+            // opiskelijat
+            cout << "Valinta 2" << endl;
+cout << "Tulostetaan aakkosjarjestykseen" << endl;
+            sort(studentList.begin(), studentList.end(), []( Student &a,  Student &b) {
+                return a.getName() < b.getName();
+
+            });
+for (auto &s: studentList) {
+    //cout << s.getName() << ": " << s.getAge() << endl;
+    s.printStudentInfo();
+}
+
+            break;
+
+        case 3:
+            // Järjestä StudentList vektorin Student oliot iän mukaan
+            // algoritmikirjaston sort funktion avulla
+            // ja tulosta printStudentInfo() funktion avulla järjestetyt
+            // opiskelijat
+            cout << "Valinta 3" << endl;
+            sort(studentList.begin(), studentList.end(), []( Student &a,  Student &b) {
+                return a.getAge() < b.getAge();
+            });
+
+            for (auto &s: studentList) {
+                //cout << s.getName() << ": " << s.getAge() << endl;
+                s.printStudentInfo();
+            }
+            break;
+
+        case 4:
+            // Kysy käyttäjältä opiskelijan nimi
+            // Etsi studentListan opiskelijoista algoritmikirjaston
+            // find_if funktion avulla löytyykö käyttäjän antamaa nimeä
+            // listalta. Jos löytyy, niin tulosta opiskelijan tiedot.
+            cout << "Valinta 4" << endl;
+            cout << "Mikä on opiskelijan nimi?" << endl;
+            cin >> sname;
+
+            it = find_if(studentList.begin(), studentList.end(), [sname](const Student &a)
+             {
+               return a.getName() == sname;     //vertaillaan onko annettu nimi sama kuin sname
+            });
+            if(it != studentList.end()) {
